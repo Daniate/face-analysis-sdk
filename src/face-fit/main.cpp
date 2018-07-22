@@ -297,9 +297,9 @@ run_video_mode(const Configuration &cfg,
     }
 
     cv::Mat_<uint8_t> gray_image;
-    if (image.type() == cv::DataType<cv::Vec<uint8_t,3> >::type)
+    if (image.type() == cv::traits::Type<cv::Vec<uint8_t,3> >::value)
       cv::cvtColor(image, gray_image, CV_BGR2GRAY);
-    else if (image.type() == cv::DataType<uint8_t>::type)
+    else if (image.type() == cv::traits::Type<uint8_t>::value)
       gray_image = image;
     else
       throw make_runtime_error("Do not know how to convert video frame to a grayscale image.");
@@ -413,17 +413,17 @@ display_data(const Configuration &cfg,
 {
 
   cv::Scalar colour;
-  if (image.type() == cv::DataType<uint8_t>::type)
+  if (image.type() == cv::traits::Type<uint8_t>::value)
     colour = cv::Scalar(255);
-  else if (image.type() == cv::DataType<cv::Vec<uint8_t,3> >::type)
+  else if (image.type() == cv::traits::Type<cv::Vec<uint8_t,3> >::value)
     colour = cv::Scalar(0,0,255);
   else
     colour = cv::Scalar(255);
 
   cv::Mat displayed_image;
-  if (image.type() == cv::DataType<cv::Vec<uint8_t,3> >::type)
+  if (image.type() == cv::traits::Type<cv::Vec<uint8_t,3> >::value)
     displayed_image = image.clone();
-  else if (image.type() == cv::DataType<uint8_t>::type)
+  else if (image.type() == cv::traits::Type<uint8_t>::value)
     cv::cvtColor(image, displayed_image, CV_GRAY2BGR);
   else 
     throw make_runtime_error("Unsupported camera image type for display_data function.");
